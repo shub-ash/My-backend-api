@@ -54,12 +54,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // MongoDB
-mongoose.connect(process.env.DATABASE_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 5000,
-  tls: true,
-});
+mongoose
+  .connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000,
+    tlsAllowInvalidCertificates: true,
+    tls: true,
+  })
+  .then(() => {
+    console.log("✔ MongoDB Connected (Render)");
+  });
 const database = mongoose.connection;
 database.on("error", (error) => console.log(error));
 database.once("connected", () => console.log("Database Connected"));
