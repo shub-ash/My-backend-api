@@ -36,6 +36,9 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const { swaggerUi, swaggerSpec } = require("./swagger");
+const fs = require("fs");
+const swaggerDocument = JSON.parse(fs.readFileSync("./swagger.json"));
 
 // 🔥 REGISTER MODELS (VERY IMPORTANT)
 require("./model/user");
@@ -74,6 +77,8 @@ app.use("/api/todo", todo);
 app.use("/api/products", products);
 app.use("/api/users", users);
 app.use("/post", post);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Start Server
 app.listen(3000, () => console.log("Server Started at 3000"));
