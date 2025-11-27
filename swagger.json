@@ -193,7 +193,16 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/Product" }
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "price": { "type": "number" },
+                  "category": { "type": "string" },
+                  "stock": { "type": "integer" }
+                },
+                "required": ["name", "price", "category", "stock"]
+              }
             }
           }
         },
